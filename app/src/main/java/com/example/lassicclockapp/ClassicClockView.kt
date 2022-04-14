@@ -16,6 +16,7 @@ class ClassicClockView @JvmOverloads constructor(
 ) : View(context, attrs, defStyleAttr) {
 
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private var miliseconds = START_VALUE
     private var seconds = START_VALUE
     private var minutes = START_VALUE
     private var hours = START_VALUE
@@ -140,20 +141,25 @@ class ClassicClockView @JvmOverloads constructor(
             it.restore()
 
             //Timer
-            if (seconds == 59f) {
-                seconds = 0f
-                if (minutes == 59f) {
-                    minutes = 0f
-                    if (hours == 12f) {
-                        hours = 0f
+            if (miliseconds == 59f) {
+                miliseconds = 0f
+                if (seconds == 59f) {
+                    seconds = 0f
+                    if (minutes == 59f) {
+                        minutes = 0f
+                        if (hours == 12f) {
+                            hours = 0f
+                        } else {
+                            hours++
+                        }
                     } else {
-                        hours++
+                        minutes++
                     }
                 } else {
-                    minutes++
+                    seconds++
                 }
             } else {
-                seconds++
+                miliseconds++
             }
             invalidate()
         }
